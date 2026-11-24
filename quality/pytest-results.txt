@@ -1,0 +1,19 @@
+Local test run, 24 November 2026, Python 3.8.
+
+Command: python -m pytest -q
+Result: 8 passed
+
+Covered behaviour:
+- Fat Loss calories for 70 kg are 1540 (factor 22)
+- Muscle Gain calories for 80 kg are 2800 (factor 35)
+- Beginner calories for 60 kg are 1560 (factor 26)
+- Unknown programs and non-positive weight are rejected
+- /health and /version return the image version
+- The home page lists the three programs
+- A member is stored with a calorie target
+- Duplicate names, missing names, and age below 16 are rejected
+- Weekly progress updates adherence
+
+SonarQube itself is not installed on this machine. The scanner configuration
+is sonar-project.properties, and the Jenkinsfile runs sonar-scanner against
+the server named SonarQube before the image is pushed.

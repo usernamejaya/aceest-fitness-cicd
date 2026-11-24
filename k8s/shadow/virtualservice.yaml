@@ -1,0 +1,21 @@
+# Optional. Apply only after Istio is installed. Live users stay on
+# aceest-primary. Istio copies each request to aceest-shadow and discards
+# the shadow response, so a candidate version can be compared without
+# changing what the user receives.
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: aceest-shadow-mirror
+  namespace: aceest
+spec:
+  hosts:
+    - aceest-primary
+  http:
+    - route:
+        - destination:
+            host: aceest-primary
+          weight: 100
+      mirror:
+        host: aceest-shadow
+      mirrorPercentage:
+        value: 100.0

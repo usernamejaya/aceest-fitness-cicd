@@ -1,0 +1,66 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aceest-ab-nginx
+  namespace: aceest
+data:
+  default.conf: |
+    map $http_x_variant $aceest_upstream {
+      default variant_a;
+      B       variant_b;
+    }
+    upstream variant_a {
+      server aceest-a:80;
+    }
+    upstream variant_b {
+      server aceest-b:80;
+    }
+    server {
+      listen 80;
+      location / {
+        proxy_pass http://$aceest_upstream;
+      }
+    }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aceest-ab-router
+  namespace: aceest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aceest-ab-router
+  template:
+    metadata:
+      labels:
+        app: aceest-ab-router
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.27-alpine
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: config
+              mountPath: /etc/nginx/conf.d
+      volumes:
+        - name: config
+          configMap:
+            name: aceest-ab-nginx
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: aceest-ab
+  namespace: aceest
+spec:
+  type: NodePort
+  selector:
+    app: aceest-ab-router
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+      nodePort: 30084
