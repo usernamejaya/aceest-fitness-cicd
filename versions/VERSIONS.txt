@@ -1,0 +1,16 @@
+Supplied desktop versions, kept here as the application history.
+
+1.0     Aceestver-1.0.py      Program picker: Fat Loss, Muscle Gain, Beginner
+1.1     Aceestver-1.1.py      Adds name, age, weight, calorie factor, adherence
+1.1.2   Aceestver1.1.2.py     Client list, CSV export, adherence chart
+2.0.1   Aceestver2.0.1.py     SQLite clients and weekly progress
+2.1.2   Aceestver-2.1.2.py    Same persistence model as 2.0.1
+2.2.1   Aceestver-2.2.1.py    Progress chart added to the database app
+2.2.4   Aceestver-2.2.4.py    Expanded client and progress workflow
+3.0.1   Aceestver-3.0.1.py    Same feature set as 2.2.4
+3.1.2   Aceestver-3.1.2.py    Reports and in-app charts
+3.2.4   Aceestver-3.2.4.py    Current desktop feature set
+
+ACEest_Fitness.py is the container image for every tag. APP_VERSION
+identifies which release the running pod is serving. Calorie factors
+are 22, 35, and 26, unchanged from version 1.1 onward.
